@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ServiceProcess;
-using System.Threading.Tasks;
 
 namespace LinuxWindowsService.App
 {
     public partial class MyTestService : ServiceBase
     {
         private readonly MyBusinessLogic myClass = new MyBusinessLogic();
+        //private readonly MyBusinessLogicAsync myClass = new MyBusinessLogicAsync();
         private readonly ServiceRunner runner = new ServiceRunner();
-        private readonly TimeSpan delay = TimeSpan.FromSeconds(2);
+        private readonly TimeSpan delay = TimeSpan.FromSeconds(1);
 
         public static void Main(string[] args)
         {
@@ -37,12 +37,14 @@ namespace LinuxWindowsService.App
         {
             runner.ExecutionException += OnExecutionException;
             runner.StartExecution(() => myClass.RunAsService(), delay);
+            //runner.StartExecution(() => myClass.RunAsServiceAsync(), delay);
         }
 
         protected override void OnStop()
         {
             runner.EndExecutionRequest().Wait();
             myClass.CleanUp();
+            //myClass.CleanupAsync().Wait();
         }
 
         private void OnExecutionException(object sender, Exception exception)
