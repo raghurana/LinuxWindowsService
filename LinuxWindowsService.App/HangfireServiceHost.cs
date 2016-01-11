@@ -23,6 +23,11 @@ namespace LinuxWindowsService.App
             hangfireServer = new BackgroundJobServer(options);
         }
 
+        private void OnStarted()
+        {
+            RecurringJob.AddOrUpdate(() => Console.WriteLine("Running...."), Cron.Minutely);
+        }
+
         protected override void OnStop()
         {
             hangfireServer.Dispose();
@@ -39,6 +44,7 @@ namespace LinuxWindowsService.App
                 Console.WriteLine("============================================");
 
                 service.OnStart(args);
+                service.OnStarted();
                 Console.ReadLine();
                 service.OnStop();
             }
