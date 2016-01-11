@@ -1,6 +1,6 @@
 ﻿namespace LinuxWindowsService.App
 {
-    partial class MyTestService
+    partial class HangfireServiceHost
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            ServiceName = "Raghu Test Linux Service";
+            this.ServiceName = "HangfireServiceHost";
         }
 
         #endregion
