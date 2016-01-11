@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyBusinessLogic.cs" />
     <Compile Include="MyBusinessLogicAsync.cs" />
     <Compile Include="MyTestService.cs">
       <SubType>Component</SubType>

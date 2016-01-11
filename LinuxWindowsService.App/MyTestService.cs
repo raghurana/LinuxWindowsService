@@ -5,8 +5,7 @@ namespace LinuxWindowsService.App
 {
     public partial class MyTestService : ServiceBase
     {
-        private readonly MyBusinessLogic myClass = new MyBusinessLogic();
-        //private readonly MyBusinessLogicAsync myClass = new MyBusinessLogicAsync();
+        private readonly MyBusinessLogicAsync myClass = new MyBusinessLogicAsync();
         private readonly ServiceRunner runner = new ServiceRunner();
         private readonly TimeSpan delay = TimeSpan.FromSeconds(1);
 
@@ -36,15 +35,13 @@ namespace LinuxWindowsService.App
         protected override void OnStart(string[] args)
         {
             runner.ExecutionException += OnExecutionException;
-            runner.StartExecution(() => myClass.RunAsService(), delay);
-            //runner.StartExecution(() => myClass.RunAsServiceAsync(), delay);
+            runner.StartExecution(() => myClass.RunAsServiceAsync(), delay);
         }
 
         protected override void OnStop()
         {
             runner.EndExecutionRequest().Wait();
-            myClass.CleanUp();
-            //myClass.CleanupAsync().Wait();
+            myClass.CleanupAsync().Wait();
         }
 
         private void OnExecutionException(object sender, Exception exception)
