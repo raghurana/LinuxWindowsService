@@ -2,6 +2,7 @@
 using System.ServiceProcess;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using NLog;
 
 namespace LinuxWindowsService.App
 {
@@ -21,11 +22,16 @@ namespace LinuxWindowsService.App
         {
             var options = new BackgroundJobServerOptions();
             hangfireServer = new BackgroundJobServer(options);
-        }
 
-        private void OnStarted()
-        {
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Running...."), Cron.Minutely);
+            try
+            {
+                RecurringJob.AddOrUpdate(() => Log("Running..."), Cron.Minutely);
+            }
+
+            catch (Exception exception)
+            {
+                Log(exception.Message);
+            }
         }
 
         protected override void OnStop()
@@ -37,14 +43,13 @@ namespace LinuxWindowsService.App
         {
             var service = new HangfireServiceHost();
 
+            Log("============================================");
+            Log("Starting hangfire server. Press enter to stop.");
+            Log("============================================");
+
             if (Environment.UserInteractive)
             {
-                Console.WriteLine("============================================");
-                Console.WriteLine("Starting hangfire server. Press enter to stop.");
-                Console.WriteLine("============================================");
-
                 service.OnStart(args);
-                service.OnStarted();
                 Console.ReadLine();
                 service.OnStop();
             }
@@ -52,6 +57,18 @@ namespace LinuxWindowsService.App
             else
             {
                 ServiceBase.Run(service);
+            }
+        }
+
+        public static void Log(string message)
+        {
+            if (Environment.UserInteractive)
+            {
+                Console.WriteLine(message);
+            }
+            else
+            {
+                LogManager.GetCurrentClassLogger().Log(LogLevel.Debug, message);
             }
         }
        
