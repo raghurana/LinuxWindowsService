@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.SQLite;
 using LinuxWindowsService.SharedTypes;
@@ -10,15 +9,13 @@ namespace TestClientConsoleApp
     {
         static void Main(string[] args)
         {
-            var dbFileName   = "HangfireQueueDb.sqlite";
-            var dbConnString = $"Data Source={dbFileName};Version=3";
-            var dbOptions    = new SQLiteStorageOptions {PrepareSchemaIfNecessary = false};
+            var dbOptions = new SQLiteStorageOptions {PrepareSchemaIfNecessary = false};
 
-            GlobalConfiguration.Configuration.UseSQLiteStorage(dbConnString, dbOptions);
+            GlobalConfiguration.Configuration.UseSQLiteStorage("HangfireServerDb", dbOptions);
             GlobalConfiguration.Configuration.UseColouredConsoleLogProvider();
 
             var client = new BackgroundJobClient();
-            client.Enqueue(() => LogHelper.LogToNLog("!!! Raghu test nlog !!!"));
+            client.Enqueue(() => LogHelper.LogToNLog("!!! Raghu test NLog !!!"));
 
             Console.WriteLine("Press return to exit.");
             Console.ReadLine();

@@ -15,8 +15,8 @@ namespace LinuxWindowsService.App
         {
             InitializeComponent();
 
-            const string dbPath = @"C:\Code\Learning\LinuxWindowsService\TestClientConsoleApp\bin\Debug\HangfireQueueDb.sqlite";
-            string dbConnString = $"Data Source={dbPath};Version=3;";
+            string dbFileName   = "HangfireQueueDb.sqlite";
+            string dbConnString = $"Data Source={dbFileName};Version=3;";
 
             GlobalConfiguration.Configuration.UseSQLiteStorage(dbConnString);
             GlobalConfiguration.Configuration.UseNLogLogProvider();
