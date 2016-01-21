@@ -2,6 +2,7 @@
 using System.ServiceProcess;
 using Hangfire;
 using Hangfire.SQLite;
+using LinuxWindowsService.SharedTypes;
 using NLog;
 
 namespace LinuxWindowsService.App
@@ -63,17 +64,12 @@ namespace LinuxWindowsService.App
             }
         }
 
-        public static void Log(string message)
+        private static void Log(string message)
         {
             if (Environment.UserInteractive)
-            {
-                Console.WriteLine(message);
-            }
+                LogHelper.LogToConsole(message);
             else
-            {
-                LogManager.GetCurrentClassLogger().Log(LogLevel.Debug, message);
-            }
+                LogHelper.LogToNLog(message);
         }
-       
     }
 }

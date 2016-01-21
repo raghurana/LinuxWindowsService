@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxWindowsService.App", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClientConsoleApp", "TestClientConsoleApp\TestClientConsoleApp.csproj", "{E711D82B-A263-43B6-AD5A-6E85FC9D6565}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxWindowsService.SharedTypes", "LinuxWindowsService.SharedTypes\LinuxWindowsService.SharedTypes.csproj", "{9BF15679-2CF7-4DDB-BF28-1DFF87C677F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E711D82B-A263-43B6-AD5A-6E85FC9D6565}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E711D82B-A263-43B6-AD5A-6E85FC9D6565}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E711D82B-A263-43B6-AD5A-6E85FC9D6565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BF15679-2CF7-4DDB-BF28-1DFF87C677F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF15679-2CF7-4DDB-BF28-1DFF87C677F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF15679-2CF7-4DDB-BF28-1DFF87C677F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF15679-2CF7-4DDB-BF28-1DFF87C677F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

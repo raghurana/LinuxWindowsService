@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.SQLite;
+using LinuxWindowsService.SharedTypes;
 
 namespace TestClientConsoleApp
 {
@@ -16,7 +18,7 @@ namespace TestClientConsoleApp
             GlobalConfiguration.Configuration.UseColouredConsoleLogProvider();
 
             var client = new BackgroundJobClient();
-            client.Schedule(() => Console.WriteLine("Raghu Test"), TimeSpan.FromSeconds(5));
+            client.Enqueue(() => LogHelper.LogToNLog("!!! Raghu test nlog !!!"));
 
             Console.WriteLine("Press return to exit.");
             Console.ReadLine();
