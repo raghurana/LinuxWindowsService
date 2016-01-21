@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceProcess;
 using Hangfire;
-using Hangfire.MemoryStorage;
+using Hangfire.SQLite;
 using NLog;
 
 namespace LinuxWindowsService.App
@@ -14,18 +14,21 @@ namespace LinuxWindowsService.App
         {
             InitializeComponent();
 
-            GlobalConfiguration.Configuration.UseMemoryStorage();
+            const string dbPath = @"C:\Code\Learning\LinuxWindowsService\TestClientConsoleApp\bin\Debug\HangfireQueueDb.sqlite";
+            string dbConnString = $"Data Source={dbPath};Version=3;";
+
+            GlobalConfiguration.Configuration.UseSQLiteStorage(dbConnString);
             GlobalConfiguration.Configuration.UseNLogLogProvider();
         }
 
-        protected override void OnStart(string[] args)
+        protected async override void OnStart(string[] args)
         {
-            var options = new BackgroundJobServerOptions();
-            hangfireServer = new BackgroundJobServer(options);
-
             try
             {
-                RecurringJob.AddOrUpdate(() => Log("Running..."), Cron.Minutely);
+                var options = new BackgroundJobServerOptions();
+                options.WorkerCount = 1;
+
+                hangfireServer = new BackgroundJobServer(options);
             }
 
             catch (Exception exception)
