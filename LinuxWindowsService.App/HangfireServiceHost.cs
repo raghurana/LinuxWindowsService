@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ServiceProcess;
 using Hangfire;
-using Hangfire.SQLite;
+using Hangfire.Redis;
 using LinuxWindowsService.SharedTypes;
-using NLog;
 
 namespace LinuxWindowsService.App
 {
@@ -15,20 +14,17 @@ namespace LinuxWindowsService.App
         {
             InitializeComponent();
 
-            string dbFileName   = "HangfireQueueDb.sqlite";
-            string dbConnString = $"Data Source={dbFileName};Version=3;";
-
-            GlobalConfiguration.Configuration.UseSQLiteStorage(dbConnString);
             GlobalConfiguration.Configuration.UseNLogLogProvider();
+
+            var connString = System.Configuration.ConfigurationManager.ConnectionStrings["azureredis"].ConnectionString;
+            GlobalConfiguration.Configuration.UseStorage(new RedisStorage(connString));
         }
 
         protected async override void OnStart(string[] args)
         {
             try
             {
-                var options = new BackgroundJobServerOptions();
-                options.WorkerCount = 1;
-
+                var options = new BackgroundJobServerOptions {WorkerCount = 1};
                 hangfireServer = new BackgroundJobServer(options);
             }
 
